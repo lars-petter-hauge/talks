@@ -136,7 +136,22 @@ Both byte <class 'bytes'>  and bytearray <class 'bytearray'>
 ### Python 3 New Features
 
 ---
-### Iterators are all
+### Generators are all
+
+* `range` in python 2 is not a generator
+* Instead `xrange`, `itertools.izip`, `dict.itervalues`..
+* `range` in python 3 behaves as xrange - the proper way
+
+```python
+def generator(n):
+    for i in range(n)
+        yield i
+```
+
+```python
+def generator(n):
+    yield from range(n)
+```
 
 ---
 ### Key Arguments

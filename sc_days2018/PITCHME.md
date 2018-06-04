@@ -125,6 +125,13 @@ Both byte <class 'bytes'>  and bytearray <class 'bytearray'>
 ---
 ### Print
 
+* Print in Python 3 is a function call.
+
+```python
+>>> x = 1; y = 2; print(f"{x} + {y} = {x + y}")
+1 + 2 = 3
+```
+
 ---
 ### Python 3 New Features
 

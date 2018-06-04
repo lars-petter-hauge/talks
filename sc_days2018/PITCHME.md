@@ -111,6 +111,14 @@ Both byte <class 'bytes'>  and bytearray <class 'bytearray'>
 ---
 ### List comprehension
 
+* In Python 2 the iterator leaks
+```python
+>>> i = 0
+>>> my_list = [i for i in xrange(5)]
+>>> print (i)
+4
+```
+
 ---
 ### Input as raw_input
 

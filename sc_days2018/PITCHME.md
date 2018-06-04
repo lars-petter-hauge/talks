@@ -85,6 +85,29 @@ sorted(sib_ages, key=lambda x:(x[1]))
 ---
 ### String Handling
 
+* In Python 2 the 'str' type only handles ASCII
+* The 'unicode' was introduced in Python 2 to handle symbols other than ASCII
+* Bytearray exist, but no byte type.
+* The 'encode' and 'decode' allows to change type, but also requires an
+* encoding - there are roughly 100 different encodings in Python 2.
+
+Note:
+ - ASCII (American Standard Code for Information Interchange) standardized in 1968
+ - Defined bytes 0 to 127; 128 to 255 was used individually to defined accented
+   characters. Different schemes existed in different places in the world.
+ - What happends if you have the wrong scheme - or if you would like to use two
+   different schemes in the same document -> hence the birth of unicode.
+---
+### String Handling
+* Python 3 string type is instead <class 'str'>, which by default is unicode.
+```python
+>>> print('strings are now utf-8 \u03BCnico\u0394é!')
+strings are now utf-8 μnicoΔé!
+```
+* Python 3 has both byte and bytearray
+>>> print('Both byte',type(b'bytes..'),' and bytearray',
+>>> type(bytearray(b'bytearrays')))
+Both byte <class 'bytes'>  and bytearray <class 'bytearray'>
 ---
 ### List comprehension
 

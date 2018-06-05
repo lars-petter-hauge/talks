@@ -81,9 +81,9 @@ TypeError: '<' not supported between instances of 'int' and 'str'
 Implicit compare (`sort()`, `max()`..)
 
 ```python
->>> sib_ages=[('Eirik', 30), ('Kristian', '24'), ('Jean-Paul', 60)]
+>>> sib_ages=[('Eirik', 30), ('Kristian', '24'), ('Jean-Paul', 32)]
 >>> sorted(sib_ages, key=lambda x:(x[1]))
-[('Eirik', 30), ('Jean-Paul', 60), ('Kristian', '24')]
+[('Eirik', 30), ('Jean-Paul', 32), ('Kristian', '24')]
 ```
 ---
 ### Try-catch
@@ -147,27 +147,30 @@ Traceback (most recent call last):
 NotImplementedError: A completely horrible msg
 ```
 
-
 ---
 ### String Handling - Python 2
 
-* In Python 2 the `str` type only handles ASCII
+* In Python 2 a string is a byte string `<type 'str'>`
 * The `unicode` was introduced in Python 2 to handle symbols other than ASCII
-* Bytearray exist in Python 2, but no byte type
-* The `encode` and `decode` allows to change type, but also requires an encoding - there are roughly 100 different encodings in Python 2
+* Bytearray (inherited from Py3) exist in Python 2, but no byte type
+* The `encode` and `decode` allows to change type
+* Roughly 100 different encodings in Python 2
 
 Note:
  - ASCII (American Standard Code for Information Interchange) standardized in 1968
  - Defined bytes 0 to 127; 128 to 255 was used individually to defined accented
    characters. Different schemes existed in different places in the world.
+ - required to know the format of the text on a webpage to decode it.
  - What happends if you have the wrong scheme - or if you would like to use two
    different schemes in the same document -> hence the birth of unicode.
 ---
 ### String Handling - Python 3
-* Python 3 string type is instead <class 'str'>, which by default is unicode.
+* Python 3 string type is instead `<class 'str'>`, which by default is unicode.
 ```python
 >>> print('strings are now utf-8 \u03BCnico\u0394é!')
 strings are now utf-8 μnicoΔé!
+>>> print(type('string'))
+<class 'str'>
 ```
 * Python 3 has both byte and bytearray
 ```python
@@ -180,19 +183,41 @@ Both byte <class 'bytes'>  and bytearray <class 'bytearray'>
 ### Other changes
 
 * Integer division
-* Leaking from list comprehension
+* Leaking outside of scope
 * Input as raw_input
-* Extend object when defining Class
 Note:
 - Input as raw_input
-
 - Extend Object
-
+- Matrix multiplication
 
 ---
 ### Python 3 New Features
 
 * A total of 21 new modules
+
+---
+### Unpacking
+```python
+>>> a, *rest, b = range(5)
+>>> rest
+[1, 2, 3]
+```
+The `rest` can be placed anywhere
+```python
+>>> *rest, a = range(5)
+>>> rest
+[0, 1, 2, 3]
+```
+
+---
+### Print
+
+* A statement in Python 2, a function call in Python 3
+
+```python
+>>> x = 1; y = 2; print(f"{x} + {y} = {x + y}")
+1 + 2 = 3
+```
 
 ---
 ### Generators
@@ -215,10 +240,12 @@ range(0,3)
 >>> print(type(range(3))
 <class 'range'>
 ```
+
 ---
 ### Generators
 
 * `yield from` simplifies syntax
+
 ```python
 def generator(n):
     for i in range(n)
@@ -308,6 +335,9 @@ Refactoring can be painful and unintentional arguments may occur
 congrats Julius the Chimp, you are human!
 ```
 
+---
+### Keyword only arguments
+
 Adding more variables breaks any calls that passed the `human` argument without key
 
 ```python
@@ -335,6 +365,9 @@ Traceback (most recent call last):
 File "<stdin>", line 1, in <module>
 TypeError: f() takes 1 positional arguments but 3 were given
 ```
+Note:
+ - Allow regular arguments appear after varargs argument
+ - Ommit argument name for varargs argument (i.e. allow single *)
 
 ---
 ### Keyword only arguments
@@ -350,65 +383,46 @@ And re-arrange arguments if that would be more natural
 >>> def f(name, *, human=False, adress=None, age=20):
         pass
 ```
----
-### Unpacking
-```python
->>> a, *rest, b = range(5)
->>> rest
-[1, 2, 3]
-```
-The `*rest` can be placed anywhere
-```python
->>> *rest, a = range(5)
->>> rest
-[0, 1, 2, 3]
-```
 
 ---
-### Matrix Manipulation
-
-```python
-a@b
-
-```
-
----
-### Print
-
-* A statement in Python 2, a function call in Python 3
-
-```python
->>> x = 1; y = 2; print(f"{x} + {y} = {x + y}")
-1 + 2 = 3
-```
+### Asyncio
+* Introduced in Python 3.4
+* Different modules existed (e.g. Twister)
+* asyncio is about concurrency - not parallelism
+> Write asynchronous, concurrent, cooperative tasks - in a sequential style
 
 ---
 ### Asyncio
 
 ```python
->>> async def help_me(name, x):
-...     print ("Helping " + name)
+>>> async def finish_report(name, x):
+...     print (name + " started working")
 ...     await asyncio.sleep(x)
 ...     if x < 10:
-...         print("Finished helping " + name + ", that was easy!")
+...         print(name + " finished the report, easy!")
 ...     else:
-...         print("Finished with " + name + ", he's a bit slower")
+...         print(name + " finished, he's a bit slower")
 ...
+>>> start = time.time()
 >>> loop = asyncio.get_event_loop()
->>> tasks = [asyncio.ensure_future(help_me("Lars Petter", 15)),
-...         asyncio.ensure_future(help_me("Sveinung", 5))]
+>>> tasks = [asyncio.ensure_future(finish_report("Lars Petter", 15)),
+...         asyncio.ensure_future(finish_report("Sveinung", 5))]
 >>> loop.run_until_complete(asyncio.gather(*tasks))
-
-Helping Lars Petter
-Helping Sveinung
-Finished helping Sveinung, that was easy!
-Finished with Lars Petter, he's a bit slower
+>>> print("total time: " + str(time.time() - start())
 ```
+
+```python
+Lars Petter started working
+Sveinung started working
+Sveinung finished the report, easy!
+Lars Petter finished, he's a bit slower
+total time: 15.002748250961304
+```
+
 ---
 ### Annotations
 
-* Python doesn't do anything with annotations other than including them in an
-* __annotations__ dict.
+* Python doesn't do anything with annotations other than including them in an `__annotations__` dict.
 * It is however possible to use linters to verify annotations.
 ```python
 >>> def f(a:int = 2) -> float:
@@ -418,28 +432,22 @@ Finished with Lars Petter, he's a bit slower
 {'a': <class 'int'>, 'return': <class 'float'>}
 ```
 ---
-### Pathlib
+### Wrap-up
 
-
+* Transition delayed by:
+  * Difficulties porting code
+  * Backporting functionalities
+  * Initially slower py3
+* Most popular libraries now support Python 3
+* Python 3 development started to stabilize
+* End of life python 2 - January 1st. 2020
 ---
 ### References
+ - Numerous PEP publications
  - Victor Stinner - Python 3: ten years later - PyCon 2018
  - Sebastian Raschka - The key differences between Python 2.7.x and Python 3.
  - Asmeurer - 10 awesome features of Python that you can't use because you
    refuse to upgrade to Python 3
----
-### List comprehension
-
-* In Python 2 the iterator leaks
-```python
->>> i = 0
->>> my_list = [i for i in xrange(5)]
->>> print (i)
-4
-```
----
-### Input as raw_input
----
-### Extend Object
-
+ - digitalocean.com/community/tutorials/...
+ - Robert Smallshire - Get to grips with asyncio in Python3
 

@@ -1,0 +1,25 @@
+rigs:
+  -
+    name: 'A'
+    wells: ['w1', 'w2', 'w3', 'w4']
+    slots: ['S1', 'S2', 'S3']
+  -
+    name: 'B'
+    wells: ['w2', 'w3', 'w4', 'w5']
+    slots: ['S3', 'S4', 'S5']
+slots:
+  -
+    name: 'S1'
+    wells: ['w1', 'w2', 'w3']
+  -
+    name: 'S2'
+    wells: ['w2', 'w3']
+  -
+    name: 'S3'
+    wells: ['w2', 'w3']
+  -
+    name: 'S4'
+    wells: ['w3', 'w4']
+  -
+    name: 'S5'
+    wells: ['w3', 'w4', 'w5']

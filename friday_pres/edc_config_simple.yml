@@ -1,0 +1,12 @@
+rigs:
+  -
+    name: 'A'
+    wells: ['w1', 'w2']
+    slots: ['S1', 'S2']
+slots:
+  -
+    name: 'S1'
+    wells: ['w1']
+  -
+    name: 'S2'
+    wells: ['w2']

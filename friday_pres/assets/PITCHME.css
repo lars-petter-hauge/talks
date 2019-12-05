@@ -1,0 +1,11 @@
+#gp-logo {
+    width: 50%;
+    height: auto;
+}
+
+#gp-logo img {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    max-width: none;
+}
